@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -11,10 +11,19 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'signals';
   counter=signal(1)
-  doubleCounter=computed(()=>this.counter()*2)
-  constructor(){
-    console.log(this.counter.set(3))
-    console.log(this.doubleCounter())
+  showCounter=signal(false)
+  doubleCounter=computed(()=>{
     
+    return this.showCounter()?this.counter()*2:'None'
+  
+  })
+  constructor(){
+    this.counter.set(3)
+    console.log(this.doubleCounter())
+    this.counter.set(2)
+    this.showCounter.set(true)
+    console.log(this.doubleCounter())
+   effect(()=>{console.log('I changed')})       
   }
+  
 }
