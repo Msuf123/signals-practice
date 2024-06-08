@@ -1,3 +1,13 @@
 <h1>This is a signal practice</h1>
 <p>Signals are nothing more than a wrapper around a value eg count=signal(1)</p>
 <p>We have methods like Signals.set() to set the value and .update() to update the value which takes a callback function and the argument to the function is previous vlaue</p>
+<h3>Types of signals</h3>
+<p>There are two types of signals ie..</p>
+<ul>
+  <li>Writeabel</li>
+  <li>Computed</li>
+</ul>
+<p>Till now we were only dealing with the writeable signals only.But what if we want to have a real-only signals to avoid updateion<br>
+To create this type of signal use computed function eg.<br> doubleCounter=computed(()=>this.counter()*2)
+<br>Value of Computed signal will automatically change as the orignal singal from which we derived it changes.
+</p>

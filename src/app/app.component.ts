@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -11,10 +11,10 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'signals';
   counter=signal(1)
+  doubleCounter=computed(()=>this.counter()*2)
   constructor(){
-    console.log(this.counter())
-    this.counter.set(4)
-    this.counter.update(value => value + 1);
-    console.log(this.counter())
+    console.log(this.counter.set(3))
+    console.log(this.doubleCounter())
+    
   }
 }
