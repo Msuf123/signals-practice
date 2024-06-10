@@ -1,4 +1,4 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, Injector, computed, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -17,13 +17,18 @@ export class AppComponent {
     return this.showCounter()?this.counter()*2:'None'
   
   })
-  constructor(){
+  constructor(private injector: Injector){
     this.counter.set(3)
     console.log(this.doubleCounter())
     this.counter.set(2)
     this.showCounter.set(true)
     console.log(this.doubleCounter())
-   effect(()=>{console.log('I changed')})       
+    const a=effect(()=>{console.log('I changed'+this.counter())})       
+    a.destroy()
+  }
+  customEffect(){
+    this.counter.set(9)
+    effect(()=>{console.log('I changed'+this.counter())},{injector:this.injector}) 
   }
   
 }

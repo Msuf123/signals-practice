@@ -11,3 +11,9 @@
 To create this type of signal use computed function eg.<br> doubleCounter=computed(()=>this.counter()*2)
 <br>Value of Computed signal will automatically change as the orignal singal from which we derived it changes.
 </p>
+<h3>Dependency in the Signal</h3>
+<p>
+  If during the process of derivation we dont read a singal then it will not be a Dependency meaning if it changes the computed signal will not recompute the vlaue<br>
+  eg. 
+</p>
+<button (click)="customEffect()">kk</button>
