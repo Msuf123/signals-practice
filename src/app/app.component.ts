@@ -1,12 +1,12 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, Injector, computed, effect, signal, untracked } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 
       
 ;
-import { interval,take, single,delay } from 'rxjs';
+import { interval,take, single,delay, count } from 'rxjs';
 
 
 
@@ -25,6 +25,7 @@ export class AppComponent {
   siganlCounter?:any
   timmer=interval(500).pipe(take(50),delay(2000))
   showCounter=signal(false)
+  
     doubleCounter=computed(()=>{
     
     return this.showCounter()?this.counter()*2:'None'
@@ -38,7 +39,8 @@ export class AppComponent {
     console.log(this.doubleCounter())
     const a=effect(()=>{console.log('I changed'+untracked(this.counter),this.doubleCounter())})       
     this.siganlCounter=toSignal(this.timmer,{initialValue:20,injector:this.injector})
-    
+    let observable=toObservable(this.counter)
+    observable.subscribe((a)=>console.log(a,'ll'))
   }
   customEffect(){
     this.counter.update((a)=>++a)
