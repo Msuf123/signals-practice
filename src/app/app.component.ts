@@ -1,4 +1,5 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, Injector, computed, effect, signal, untracked } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
@@ -7,9 +8,6 @@ import { RouterOutlet } from '@angular/router';
 ;
 import { interval,take, single,delay } from 'rxjs';
 
-// Even though this is a different array instance, the deep equality
-// function will consider the values to be equal, and the signal won't
-// trigger any updates.
 
 
     
@@ -32,7 +30,7 @@ export class AppComponent {
     return this.showCounter()?this.counter()*2:'None'
   
   })
-  constructor(private injector:Injector){
+  constructor(private injector:Injector,private http:HttpClient){
     this.counter.set(3)
     console.log(this.doubleCounter())
     this.counter.set(9)
@@ -47,5 +45,10 @@ export class AppComponent {
     this.siganlCounter=toSignal(this.timmer,{initialValue:20,injector:this.injector})
     
   }
-  
+  cookie(){
+    this.http.get('http://localhost:3000/oo',{responseType:'text',withCredentials:true,observe:'body'}).subscribe((a)=>{console.log(a)})
+  }
+  sendCookie(){
+    this.http.get('http://localhost:3000/kk',{withCredentials:true,responseType:'text',observe:'body'}).subscribe((a)=>console.log(a))
+  }
 }
