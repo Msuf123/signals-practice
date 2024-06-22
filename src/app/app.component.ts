@@ -39,15 +39,20 @@ export class AppComponent {
     console.log(this.doubleCounter())
     const a=effect(()=>{console.log('I changed'+untracked(this.counter),this.doubleCounter())})       
     this.siganlCounter=toSignal(this.timmer,{initialValue:20,injector:this.injector})
-    let observable=toObservable(this.counter)
-    observable.subscribe((a)=>console.log(a,'ll'))
+    
+    const customeObs$=toObservable(this.counter)
+    customeObs$.subscribe((a)=>{
+      console.log(a,'lll')
+    })
   }
   customEffect(){
     this.counter.update((a)=>++a)
     this.siganlCounter=toSignal(this.timmer,{initialValue:20,injector:this.injector})
     
   }
+
   cookie(){
+    this.counter.set(3)
     this.http.get('http://localhost:3000/oo',{responseType:'text',withCredentials:true,observe:'body'}).subscribe((a)=>{console.log(a)})
   }
   sendCookie(){
